@@ -1,0 +1,48 @@
+#!/bin/bash
+
+## Node is expected to be two-digit number
+node=$1
+
+if [ ! $node ]; then
+    node=99
+fi
+
+#if [ -f olive-vm${node}.pid ]; then
+#    echo "Sorry.  VM $ID is already running. "
+#    exit
+#fi
+
+sudo qemu \
+ -name olive-vm${node} \
+ -hda olive-vm${node}.qcow2 \
+ -serial telnet::59${node},server,nowait \
+ -enable-kvm \
+ -m 128 \
+ -smp sockets=1,cores=1 \
+ -pidfile olive-vm${node}.pid \
+ -bios bios-0.10.6.bin \
+ -boot c \
+ -localtime \
+ -netdev type=tap,id=net0,ifname=tap${node}i0,script=vnl-ifup,downscript=vnl-ifdown \
+ -device i82559er,netdev=net0,id=net0,mac=52:54:00:99:${node}:00 \
+ -netdev type=tap,id=net1,ifname=tap${node}i1,script=vnl-ifup,downscript=vnl-ifdown \
+ -device i82559er,netdev=net1,id=net1,mac=52:54:00:99:${node}:01 \
+ -netdev type=tap,id=net2,ifname=tap${node}i2,script=vnl-ifup,downscript=vnl-ifdown \
+ -device i82559er,netdev=net2,id=net2,mac=52:54:00:99:${node}:02 \
+ -netdev type=tap,id=net3,ifname=tap${node}i3,script=vnl-ifup,downscript=vnl-ifdown \
+ -device i82559er,netdev=net3,id=net3,mac=52:54:00:99:${node}:03 \
+ -netdev type=tap,id=net4,ifname=tap${node}i4,script=vnl-ifup,downscript=vnl-ifdown \
+ -device i82559er,netdev=net4,id=net4,mac=52:54:00:99:${node}:04 \
+ -netdev type=tap,id=net5,ifname=tap${node}i5,script=vnl-ifup,downscript=vnl-ifdown \
+ -device i82559er,netdev=net5,id=net5,mac=52:54:00:99:${node}:05 \
+ -netdev type=tap,id=net6,ifname=tap${node}i6,script=vnl-ifup,downscript=vnl-ifdown \
+ -device i82559er,netdev=net6,id=net6,mac=52:54:00:99:${node}:06 \
+ -netdev type=tap,id=net7,ifname=tap${node}i7,script=vnl-ifup,downscript=vnl-ifdown \
+ -device i82559er,netdev=net7,id=net7,mac=52:54:00:99:${node}:07
+
+## Keeping this in the script for reference, but 
+## ideally, should only need to be written once and 
+## then would be replace with -readconfig.
+# -writeconfig olive-vm${node}.cfg
+## But then again, this script dynamically creates the arguments, so this might be a moot point
+

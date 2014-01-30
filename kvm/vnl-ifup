@@ -1,0 +1,21 @@
+#!/bin/bash
+set -x
+
+if [ -n "$1" ];then
+        tap=$1
+        idx=${tap: -1:1}
+        bridge="mybr$idx"
+        echo "Creating bridge $bridge"
+        sudo brctl addbr $bridge
+        sudo ip link set $bridge up
+        echo "Creating $tap"
+        sudo tunctl -u `whoami` -t $tap
+        sudo ip link set $tap up
+        sleep 0.5s
+        echo "Adding $tap to $bridge"
+        /usr/bin/sudo /sbin/brctl addif $bridge $tap
+        exit 0
+else
+        echo "Error: no interface specified"
+        exit 1
+fi

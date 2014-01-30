@@ -33,4 +33,14 @@ I'm hoping for this to be an exhaustive list.  Here are the names of the package
 * bridge-utils
 * qemu-kvm
 
-Also, I am focasing on QEMU-KVM.  I might get around to putting something together for VMWare or XEN or something else, or someone else is welcome to contribute.
+Hypervisor
+----------
+I am focasing on QEMU-KVM.  I might get around to putting something together for VMWare or XEN or something else, or someone else is welcome to contribute.
+
+For a headless system, I chose [Proxmox](http://www.proxmox.com) because it used KVM and had a robust web-based GUI.  There are, however, some issues getting the Olives to be able to be managed through the Proxmox web interface which I have detailed [elsewhere](http://forum.proxmox.com/archive/index.php/t-10446.html).
+
+Bios
+----
+For JunOS to run in kvm, you need to use an older bios (0.10.6) which can be found here:
+[http://downloads.sourceforge.net/project/kvm/qemu-kvm/0.10.6/qemu-kvm-0.10.6.tar.gz](http://downloads.sourceforge.net/project/kvm/qemu-kvm/0.10.6/qemu-kvm-0.10.6.tar.gz)
+Just untar and grab the file from ./qemu-kvm-0.10.6/pc-bios/bios.bin and copy it somewhere you can access (/usr/share/qemu-kvm/bios-0.10.6.bin is probably good).

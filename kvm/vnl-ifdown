@@ -1,0 +1,20 @@
+#!/bin/bash
+set -x
+
+if [ -n "$1" ];then
+        tap=$1
+        idx=${tap: -1:1}
+        bridge="mybr$idx"
+        echo "Shutting down $tap"
+        sudo tunctl -u `whoami` -t $tap
+        sudo ip link set $tap down
+        echo "Removing $tap from $bridge"
+        sudo brctl delif $bridge $tap
+        ## Need to check if bridge is no longer used
+        ## and remove it
+        exit 0
+else
+        echo "Error: no interface specified"
+        exit 1
+fi
+
