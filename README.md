@@ -18,6 +18,8 @@ Arista
 ------
 Arista officially supports what they call vEOS.  You may obtain a copy of this from your friendly neighborhood representative.  I will attempt to include anything that is relevant to getting it up and running in this environment.
 
+I have not had a lot of luck booting Arista from newer aboot images, so I use `Aboot-veos-serial-2.0.8.iso` for all of my VMs.
+
 Dependencies
 ============
 
